@@ -1,11 +1,13 @@
 package com.senai.ecommerce.dtos;
 
+import com.senai.ecommerce.entities.Category;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +26,11 @@ public class ProductDTO {
     private String imgUrl;
     @NotEmpty(message = "O campo categorias não pode ser vazio")
     private List<CategoryDTO> categories;
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories.stream().map(
+                category ->
+                        new CategoryDTO(category.getId(),
+                                category.getName())).toList();
+    }
 }
