@@ -25,6 +25,13 @@ public class ProductService {
         return products.stream().map(product -> productToProductDTO(product)).toList();
     }
     @Transactional
+    public ProductDTO create(ProductDTO productDTO) {
+        Product product = productDTOToProduct(productDTO);
+        Product savedProduct = productRepository.save(product);
+        return productToProductDTO(savedProduct);
+    }
+
+
 
     public ProductDTO productToProductDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
@@ -36,4 +43,21 @@ public class ProductService {
         productDTO.setCategories(product.getCategories());
         return productDTO;
     }
+
+    public Product productDTOToProduct(ProductDTO productDTO) {
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setImgUrl(productDTO.getImgUrl());
+        product.setCategories(productDTO.getCategories());
+        return product;
+    }
+
+//    private ProductDTO toDTO(Product product) {
+//        return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImgUrl(), product.getCategories());
+//    }
+//    private Product toEntity(ProductDTO productDTO) {
+//        return new Product(productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getImgUrl(), productDTO.getCategories());
+//    }
 }

@@ -27,10 +27,16 @@ public class ProductDTO {
     @NotEmpty(message = "O campo categorias não pode ser vazio")
     private List<CategoryDTO> categories;
 
+    public ProductDTO(Long id, String name, String description, double price, String imgUrl, Set<Category> categories) {
+    }
+
     public void setCategories(Set<Category> categories) {
         this.categories = categories.stream().map(
                 category ->
                         new CategoryDTO(category.getId(),
                                 category.getName())).toList();
+    }
+    public Set<Category> getCategories() {
+        return categories;
     }
 }
