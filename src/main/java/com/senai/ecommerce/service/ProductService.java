@@ -1,6 +1,7 @@
 package com.senai.ecommerce.service;
 
 import com.senai.ecommerce.dtos.ProductDTO;
+import com.senai.ecommerce.entities.Category;
 import com.senai.ecommerce.entities.Product;
 import com.senai.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice());
         productDTO.setImgUrl(product.getImgUrl());
-        productDTO.setCategories(product.getCategories());
+        productDTO.setCategories((List<Category>) product.getCategories());
         return productDTO;
     }
 

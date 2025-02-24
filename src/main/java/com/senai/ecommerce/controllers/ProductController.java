@@ -30,18 +30,18 @@ public class ProductController {
         ProductDTO product = productService.create(productDTO);//repository.save(productDTO);
         return ResponseEntity.ok(product);
     }
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id,
-                                                    @RequestBody ProductDTO
-                                                            productDTO) {
-        ProductDTO product = productService.update(id, productDTO);
-        return ResponseEntity.ok(product);
-    }
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long id) {
-        ProductDTO product = productService.delete(id);
-        return ResponseEntity.ok(product);
-    }
+//    @PutMapping(value = "/{id}")
+//    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id,
+//                                                    @RequestBody ProductDTO
+//                                                            productDTO) {
+//        ProductDTO product = productService.update(id, productDTO);
+//        return ResponseEntity.ok(product);
+//    }
+//    @DeleteMapping(value = "/{id}")
+//    public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long id) {
+//        ProductDTO product = productService.delete(id);
+//        return ResponseEntity.ok(product);
+//    }
 
 
 }

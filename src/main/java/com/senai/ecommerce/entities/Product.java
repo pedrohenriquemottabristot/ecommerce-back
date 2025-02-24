@@ -35,4 +35,7 @@ public class Product {
     public Product() {
 
     }
+
+    public void setCategories(@NotEmpty(message = "O campo categorias não pode ser vazio") List<CategoryDTO> categories) {
+    }
 }
