@@ -32,6 +32,19 @@ public class ProductService {
         return productToProductDTO(savedProduct);
     }
 
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO productDTO){
+        Product product = productDTOToProduct(productDTO);
+        product.setId(id);
+        // o repository não consegue salvar um DTO, ele salva entity
+        product = productRepository.save(product);
+        return productToProductDTO(product);
+    }
+
+    @Transactional
+    public void delete(Long id){
+        productRepository.deleteById(id);
+    }
 
 
     public ProductDTO productToProductDTO(Product product) {
