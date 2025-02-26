@@ -4,6 +4,7 @@ import com.senai.ecommerce.dtos.CategoryDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import org.w3c.dom.Text;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    @Column(columnDefinition = "TEXT")
     private String imgUrl;
 
     @ManyToMany

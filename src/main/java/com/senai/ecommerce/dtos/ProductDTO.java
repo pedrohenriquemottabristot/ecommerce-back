@@ -31,7 +31,7 @@ public class ProductDTO {
     }
 
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<CategoryDTO> categories) {
         this.categories = categories.stream().map(
                 category ->
                         new CategoryDTO(category.getId(),

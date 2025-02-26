@@ -1,5 +1,6 @@
 package com.senai.ecommerce.service;
 
+import com.senai.ecommerce.dtos.CategoryDTO;
 import com.senai.ecommerce.dtos.ProductDTO;
 import com.senai.ecommerce.entities.Category;
 import com.senai.ecommerce.entities.Product;
@@ -54,7 +55,7 @@ public class ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setPrice(product.getPrice());
         productDTO.setImgUrl(product.getImgUrl());
-        productDTO.setCategories((List<Category>) product.getCategories());
+        productDTO.setCategories(product.getCategories().stream().map(category -> new CategoryDTO(category.getId(), category.getName())).toList());
         return productDTO;
     }
 
