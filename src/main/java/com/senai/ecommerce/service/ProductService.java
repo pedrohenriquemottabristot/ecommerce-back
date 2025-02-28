@@ -4,6 +4,7 @@ import com.senai.ecommerce.dtos.CategoryDTO;
 import com.senai.ecommerce.dtos.ProductDTO;
 import com.senai.ecommerce.entities.Category;
 import com.senai.ecommerce.entities.Product;
+import com.senai.ecommerce.repository.CategoryRepository;
 import com.senai.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ import java.util.stream.Collectors;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         Product product = productRepository.findById(id).orElseThrow();
@@ -30,10 +35,22 @@ public class ProductService {
     }
     @Transactional
     public ProductDTO create(ProductDTO productDTO) {
-        Product product = productDTOToProduct(productDTO);
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setImgUrl(productDTO.getImgUrl());
+
+        // Buscando categorias existentes no banco antes de associar
+        Set<Category> categories = productDTO.getCategories().stream()
+                .map(categoryDTO -> categoryRepository.findById(categoryDTO.getId())
+                        .orElseThrow(() -> new RuntimeException("Categoria não encontrada: " + categoryDTO.getId())))
+                .collect(Collectors.toSet());
+
+        product.setCategories(categories);
+
+        // Salvando o produto já com as categorias corretamente associadas
         Product savedProduct = productRepository.save(product);
-
-
         return productToProductDTO(savedProduct);
     }
 
@@ -70,10 +87,14 @@ public class ProductService {
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setPrice(productDTO.getPrice());
-        product.setImgUrl(productDTO.getImg_url());
+        product.setImgUrl(productDTO.getImgUrl());
+
+        // Buscando categorias existentes no banco
         Set<Category> categories = productDTO.getCategories().stream()
-                .map(categoryDTO -> new Category(categoryDTO.getId(), categoryDTO.getName()))
+                .map(categoryDTO -> categoryRepository.findById(categoryDTO.getId())
+                        .orElseThrow(() -> new RuntimeException("Categoria não encontrada: " + categoryDTO.getId())))
                 .collect(Collectors.toSet());
+
         product.setCategories(categories);
         return product;
     }

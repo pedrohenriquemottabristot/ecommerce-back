@@ -23,7 +23,7 @@ public class ProductDTO {
     @NotNull(message = "O campo preço não pode ser vazio")
     @Positive(message = "O campo preço precisa ser positivo")
     private double price;
-    private String img_url;
+    private String imgUrl;
     //@NotEmpty(message = "O campo categorias não pode ser vazio")
     private List<CategoryDTO> categories;
 
