@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -18,18 +20,20 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         Product product = productRepository.findById(id).orElseThrow();
-        ProductDTO productDTO = productToProductDTO(product);
-        return productDTO;
+        return productToProductDTO(product);
+
     }
     @Transactional(readOnly = true)
     public List<ProductDTO> findAll() {
         List<Product> products = productRepository.findAll();
-        return products.stream().map(product -> productToProductDTO(product)).toList();
+        return products.stream().map(this::productToProductDTO).toList();
     }
     @Transactional
     public ProductDTO create(ProductDTO productDTO) {
         Product product = productDTOToProduct(productDTO);
         Product savedProduct = productRepository.save(product);
+
+
         return productToProductDTO(savedProduct);
     }
 
@@ -48,24 +52,29 @@ public class ProductService {
     }
 
 
-    public ProductDTO productToProductDTO(Product product) {
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(product.getId());
-        productDTO.setName(product.getName());
-        productDTO.setDescription(product.getDescription());
-        productDTO.setPrice(product.getPrice());
-        productDTO.setImgUrl(product.getImgUrl());
-        productDTO.setCategories(product.getCategories().stream().map(category -> new CategoryDTO(category.getId(), category.getName())).toList());
-        return productDTO;
+    private ProductDTO productToProductDTO(Product product) {
+        return new ProductDTO(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getImgUrl(),
+                product.getCategories().stream()
+                        .map(category -> new CategoryDTO(category.getId(), category.getName()))
+                        .toList()
+        );
     }
 
-    public Product productDTOToProduct(ProductDTO productDTO) {
+    private Product productDTOToProduct(ProductDTO productDTO) {
         Product product = new Product();
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setPrice(productDTO.getPrice());
-        product.setImgUrl(productDTO.getImgUrl());
-        product.setCategories(productDTO.getCategories());
+        product.setImgUrl(productDTO.getImg_url());
+        Set<Category> categories = productDTO.getCategories().stream()
+                .map(categoryDTO -> new Category(categoryDTO.getId(), categoryDTO.getName()))
+                .collect(Collectors.toSet());
+        product.setCategories(categories);
         return product;
     }
 

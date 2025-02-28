@@ -4,7 +4,6 @@ import com.senai.ecommerce.dtos.CategoryDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.w3c.dom.Text;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,10 +20,11 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    @Column(columnDefinition = "TEXT")
-    private String imgUrl;
+    @Column(name = "img_url", columnDefinition = "TEXT")
+    String imgUrl;
 
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -37,7 +37,10 @@ public class Product {
     public Product() {
 
     }
-
-    public void setCategories(@NotEmpty(message = "O campo categorias não pode ser vazio") List<CategoryDTO> categories) {
+    public Product(Long id, String name, String description, double price, String imgUrl, List<CategoryDTO> categories) {
     }
+
+    public void setCategories(Set<Category> categories) {
+    }
+
 }

@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.util.HashSet;
 import java.util.List;
-@AllArgsConstructor
+import java.util.Set;
+
 @NoArgsConstructor
 @Data
 @Entity
@@ -20,6 +22,8 @@ public class Category {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private List<Product> products;
+    private Set<Product> products = new HashSet<>();
 
+    public Category(Long id, String name) {
+    }
 }
