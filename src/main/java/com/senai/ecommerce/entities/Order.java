@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -12,8 +13,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Instant moment;
+    private LocalDateTime moment;
+    @Enumerated(EnumType.ORDINAL) // Salva o enum como um número (0,1,2...)
     private OrderStatus status;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

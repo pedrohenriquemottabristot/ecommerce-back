@@ -41,18 +41,20 @@ public class ProductService {
         product.setPrice(productDTO.getPrice());
         product.setImgUrl(productDTO.getImgUrl());
 
-        // Buscando categorias existentes no banco antes de associar
         Set<Category> categories = productDTO.getCategories().stream()
                 .map(categoryDTO -> categoryRepository.findById(categoryDTO.getId())
-                        .orElseThrow(() -> new RuntimeException("Categoria não encontrada: " + categoryDTO.getId())))
+                        .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada: " + categoryDTO.getId())))
                 .collect(Collectors.toSet());
 
         product.setCategories(categories);
 
-        // Salvando o produto já com as categorias corretamente associadas
-        Product savedProduct = productRepository.save(product);
-        return productToProductDTO(savedProduct);
+// Agora salva apenas uma vez
+        product = productRepository.save(product);
+
+        return productToProductDTO(product);
+
     }
+
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO){
