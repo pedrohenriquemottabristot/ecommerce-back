@@ -3,7 +3,6 @@ package com.senai.ecommerce.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data

@@ -1,13 +1,11 @@
 package com.senai.ecommerce.dtos;
 
-import com.senai.ecommerce.entities.Category;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
