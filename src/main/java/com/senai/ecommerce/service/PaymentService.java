@@ -17,6 +17,6 @@ public class PaymentService {
     }
 
     private PaymentDTO paymentToPaymentDTO(Payment payment) {
-        return new PaymentDTO(payment.getId(), payment.getMoment());
+        return new PaymentDTO(payment);
     }
 }
