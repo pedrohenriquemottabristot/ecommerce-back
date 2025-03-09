@@ -6,6 +6,10 @@ import com.senai.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
     @Autowired
@@ -16,8 +20,36 @@ public class UserService {
         return userToUserDTO(user);
     }
 
-    private UserDTO userToUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPhone(),user.getBirthDate(), user.getRoles());
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setPhone(userDTO.getPhone());
+        user.setBirthDate(LocalDate.parse(userDTO.getBirthDate()));
+        user.setRoles(userDTO.getRoles());
+        user = userRepository.save(user);
+        return userToUserDTO(user);
     }
 
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setPhone(userDTO.getPhone());
+        user.setBirthDate(LocalDate.parse(userDTO.getBirthDate()));
+        user.setRoles(userDTO.getRoles());
+        user = userRepository.save(user);
+        return userToUserDTO(user);
+    }
+
+    public List<UserDTO> listUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::userToUserDTO).collect(Collectors.toList());
+    }
+
+    private UserDTO userToUserDTO(User user) {
+        return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPhone(), user.getBirthDate(), user.getRoles());
+    }
 }

@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/order-items")
+@RequestMapping(value = "/api/order-items")
 public class OrderItemController {
 
     @Autowired
