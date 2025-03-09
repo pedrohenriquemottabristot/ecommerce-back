@@ -14,8 +14,7 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
     @RequestMapping(value = "/{id}")
-    public void getPaymentById(@PathVariable Long id) {
-        PaymentDTO paymentDTO = paymentService.findById(id);
-
+    public PaymentDTO getPaymentById(@PathVariable Long id) {
+        return paymentService.findById(id);
     }
 }

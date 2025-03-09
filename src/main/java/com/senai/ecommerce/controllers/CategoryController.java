@@ -1,7 +1,6 @@
 package com.senai.ecommerce.controllers;
 
 import com.senai.ecommerce.dtos.CategoryDTO;
-import com.senai.ecommerce.entities.Category;
 import com.senai.ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
