@@ -8,8 +8,8 @@ INSERT INTO tb_product(name,description,price,img_url) VALUES ('Notebook','Noteb
 INSERT INTO tb_product_category(product_id,category_id) VALUES (1,1);
 INSERT INTO tb_product_category(product_id,category_id) VALUES (1,2);
 
-INSERT INTO `tb_user` (name, email, password, phone, birth_date, roles)VALUES ('João Silva', 'joao@email.com', 'senha123', '11999999999', '1990-05-20', 'USER');
-INSERT INTO `tb_user` (name, email, password, phone, birth_date, roles)VALUES ('Maria Silva', 'maria@email.com', 'senha123', '11999999999', '1990-05-20', 'ADMIN');
+INSERT INTO tb_user (name, email, password, phone, birth_date, roles)VALUES ('João Silva', 'joao@email.com', 'senha123', '11999999999', '1990-05-20', 'USER');
+INSERT INTO tb_user (name, email, password, phone, birth_date, roles)VALUES ('Maria Silva', 'maria@email.com', 'senha123', '11999999999', '1990-05-20', 'ADMIN');
 
 INSERT INTO tb_order(moment,status,user_id) VALUES (now(),0,1);
 
