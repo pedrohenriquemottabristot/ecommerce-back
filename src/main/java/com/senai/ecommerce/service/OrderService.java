@@ -35,6 +35,8 @@ public class OrderService {
     public OrderDTO findById(Long id) {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+        // Use Hibernate.initialize to safely load the collection
+        org.hibernate.Hibernate.initialize(order.getItems());
         return new OrderDTO(order);
     }
 
