@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,10 @@ public class OrderService {
     @Transactional
     public OrderDTO insert(OrderDTO dto) {
         Order entity = new Order();
+        // Set the current moment if not provided
+        if (dto.getMoment() == null) {
+            dto.setMoment(LocalDateTime.now());
+        }
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
         return new OrderDTO(entity);
